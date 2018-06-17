@@ -2,7 +2,8 @@
 日々の業務記録をまとめるやつ
 
 ## 使い方
-`python calc_timer.py -f 記録しているjsonファイルのパス -d 日付`
+`python calc_timer.py -f 記録しているjsonファイルのパス [-d 日付] [-p]` <br>
+> `-p` : jsonファイル内のすべてのデータを集計して円グラフで出力する．
 
 ## jsonファイルの中身の書き方
 ```
