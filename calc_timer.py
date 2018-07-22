@@ -89,8 +89,9 @@ def plot(all_data):
     for i, elem in enumerate(sorted(all_data.items(), key=lambda x: -x[1])):
         key = elem[0]
         val = elem[1]
-        t = dt.strptime(str(all_data[key]), "%H:%M:%S")
-        str_t = "{0}h{1}m".format(t.day*24+t.hour, t.minute)
+        h = int(all_data[key].total_seconds()//(60*60))
+        m = int(all_data[key].total_seconds()/60 - h*60)
+        str_t = "{0}h{1}m".format(h, m)
         label.append("{0} [{1}]".format(key, str_t))
         data.append(val.total_seconds()/60)
         if key in my_color:
