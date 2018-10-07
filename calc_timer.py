@@ -59,6 +59,40 @@ def calc_time(str_time):
         del_t += dt.strptime(t_elem[1], "%H:%M") - dt.strptime(t_elem[0], "%H:%M")
     return del_t
 
+def summarize(use_data):
+    data = OrderedDict()
+    for key in use_data:
+        t_del = calc_time(use_data[key])
+        minute = t_del.seconds//(60)
+        t = datetime.time(hour=minute//60, minute=minute%(60))
+        work_name = key.split("/", 1)
+        if work_name[0] in data:
+            data[work_name[0]].append([work_name[1], t])
+        else:
+            if len(work_name) == 1:
+                data[work_name[0]] = t
+            else:
+                data[work_name[0]] = [[work_name[1], t]]
+    return data
+
+def output(data):
+    for key in data:
+        if type(data[key]) == list:
+            print("* {0}".format(key))
+            for elem in data[key]:
+                msg = "    ** {0}: {1}h{2}m"
+                if elem[1].hour == 0:
+                        msg = "    ** {0}: {2}m"
+                elif elem[1].minute == 0:
+                    msg = "    ** {0}: {1}h"
+                print(msg.format(elem[0], elem[1].hour, elem[1].minute))
+        else:
+            msg = "* {0}: {1}h{2}m"
+            if data[key].hour == 0:
+                msg = "* {0}: {2}m"
+            elif data[key].minute == 0:
+                msg = "* {0}: {1}h"
+            print(msg.format(key, data[key].hour, data[key].minute))
 
 def aggregate(all_data):
     ret_data = {}
@@ -101,7 +135,7 @@ def plot(all_data):
     plt.figure(figsize=(9,5))
     plt.pie(data,counterclock=False,startangle=90,autopct=lambda p:'{:.1f}%'.format(p), colors=col)
     plt.subplots_adjust(left=0,right=0.7)
-    plt.legend(label,fancybox=True,loc='center left',bbox_to_anchor=(0.9,0.5))
+    plt.legend(label, fancybox=True, loc='upper left', bbox_to_anchor=(0.83, 1))
     plt.axis('equal')
     plt.show()
 
@@ -117,14 +151,9 @@ def main():
 
     elif args.day is not None:
         use_data = data[args.day]
-        for key in use_data:
-            t = dt.strptime(str(calc_time(use_data[key])), "%H:%M:%S")
-            msg = "- {0}: {1}h{2}m"
-            if t.hour == 0:
-                msg = "- {0}: {2}m"
-            elif t.minute == 0:
-                msg = "- {0}: {1}h"
-            print(msg.format(key.replace("/", "=>", 1), t.hour, t.minute))
+        data = summarize(use_data)
+        output(data)
+
     else:
         parser.print_help()
 
