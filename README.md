@@ -12,7 +12,7 @@ flask run
 ## 使えるAPI
 
 |URL|機能|パラメータ|
-|---|---|---||
+|---|---|---|
 |GET /calc/daily|日付計算|day: 日付<br>path: ファイルのパス|
 |POST /record/start|業務スタートを記録|val: 値|
 |GET /record/start|スタート記録取得| - |
