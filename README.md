@@ -1,6 +1,27 @@
 # calc_timer
 日々の業務記録をまとめるやつ
 
+# 新バージョン
+
+## 使い方
+```
+set FLASK_APP=rest_endpoint.py
+flask run
+```
+
+## 使えるAPI
+
+|URL|機能|パラメータ|
+|---|---|---||
+|GET /calc/daily|日付計算|day: 日付<br>path: ファイルのパス|
+|POST /record/start|業務スタートを記録|val: 値|
+|GET /record/start|スタート記録取得| - |
+|POST /record/end|業務終了記録|day: 日付<br>path: ファイルのパス<br>subj: 業務内容<br>val: 作業開始、終了時刻|
+
+---
+
+# 旧バージョン
+
 ## 使い方
 `python calc_timer.py -f 記録しているjsonファイルのパス [-d 日付] [-p]` <br>
 > `-p` : jsonファイル内のすべてのデータを集計して円グラフで出力する．
