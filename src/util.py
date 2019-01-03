@@ -3,6 +3,7 @@ from collections import OrderedDict
 
 RECORD_DIR = "record/"
 START_FILE = RECORD_DIR + "start_time.txt"
+PATH_RECORD_FILE = RECORD_DIR + "path_record.txt"
 
 def _mk_dict(pairs):
     ret_dict = OrderedDict()
@@ -28,3 +29,13 @@ def read_json(path):
 def write_json(path, data):
     with open(path, 'w', encoding="utf-8") as fp:
         json.dump(data, fp, ensure_ascii=False, indent=4)
+
+def read_path_record():
+    val = ""
+    with open(PATH_RECORD_FILE, 'r', encoding="utf-8") as fp:
+        val = fp.read()
+    return val
+
+def write_path_record(val):
+    with open(PATH_RECORD_FILE, 'w', encoding="utf-8") as fp:
+        fp.write(val)

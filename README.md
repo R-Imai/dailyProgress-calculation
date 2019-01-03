@@ -17,6 +17,10 @@ flask run
 |POST /record/start|業務スタートを記録|val: 値|
 |GET /record/start|スタート記録取得| - |
 |POST /record/end|業務終了記録|day: 日付<br>path: ファイルのパス<br>subj: 業務内容<br>val: 作業開始、終了時刻|
+|POST /setting/path|記録ファイルpath更新|path: ファイルのパス|
+|GET /setting/path|記録ファイルpath取得|-|
+|GET /record/get|業務記録取得|day: 日付<br>path: ファイルのパス|
+|POST /record/edit|業務記録編集|day: 日付<br>path: ファイルのパス<br>val: 編集後Json文字列|
 
 ---
 

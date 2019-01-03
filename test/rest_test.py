@@ -20,3 +20,6 @@ print(val.text)
 
 val = requests.post('http://127.0.0.1:5000/record/end', params={"path": "sample_data.json", "day": "1", "subj":  "Java学習/Java入門4", "val":"19:00-19:30"})
 print(val.text)
+
+val = requests.get('http://127.0.0.1:5000/setting/path')
+print(val.text)
