@@ -1,5 +1,5 @@
 # calc_timer
-日々の業務記録をまとめるやつ
+[TimeRecorder](https://github.com/R-Imai/TimeRecorder) のAPI部分
 
 # 新バージョン
 
