@@ -2,8 +2,9 @@ import json
 from collections import OrderedDict
 
 RECORD_DIR = "record/"
-START_FILE = RECORD_DIR + "start_time.txt"
-PATH_RECORD_FILE = RECORD_DIR + "path_record.txt"
+START_FILE = RECORD_DIR + "system/start_time.txt"
+PATH_RECORD_FILE = RECORD_DIR + "system/path_record.txt"
+FIGURE_DIR = RECORD_DIR + "fig/"
 
 def _mk_dict(pairs):
     ret_dict = OrderedDict()

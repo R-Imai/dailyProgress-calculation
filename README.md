@@ -21,6 +21,7 @@ flask run
 |GET /setting/path|記録ファイルpath取得|-|
 |GET /record/get|業務記録取得|day: 日付<br>path: ファイルのパス|
 |POST /record/edit|業務記録編集|day: 日付<br>path: ファイルのパス<br>val: 編集後Json文字列|
+|GET /graph/save|グラフ保存|json: 業務記録ファイルのパス<br> path: 保存画像ファイルのパス|
 
 ---
 

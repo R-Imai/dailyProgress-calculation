@@ -78,5 +78,18 @@ def path_record():
     elif request.method == "GET":
         return setting_data.get()
 
+@app.route("/graph/show", methods=['GET'])
+def graph_show():
+    path = request.args.get("json")
+    calc_logic.plot(path)
+    return "OK"
+
+@app.route("/graph/save", methods=['GET'])
+def graph_save():
+    json_path = request.args.get("json")
+    save_path = request.args.get("path")
+    ret_value = calc_logic.plot(json_path, save_path=save_path)
+    return ret_value + "へ画像を保存しました。"
+
 if __name__ == "__main__":
     app.run(debug=True)
