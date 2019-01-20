@@ -149,7 +149,7 @@ def plot(all_data):
             col[i] = hex2color(my_color[key])
 
     plt.rcParams['font.family'] = 'Yu Mincho'
-    plt.figure(figsize=(9,5))
+    plt.figure(figsize=(18, 10))
     plt.pie(data,counterclock=False,startangle=90,autopct=lambda p:'{:.1f}%'.format(p), colors=col)
     plt.subplots_adjust(left=0,right=0.7)
     plt.legend(label, fancybox=True, loc='upper left', bbox_to_anchor=(0.83, 1))
