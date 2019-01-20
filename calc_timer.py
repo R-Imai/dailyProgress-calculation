@@ -35,6 +35,16 @@ def parse_arguments():
             help = "Display all data as a pie chart"
     )
 
+    parser.add_argument(
+            "-n", "--newplot",
+            type = bool,
+            dest = "new_plot",
+            default = False,
+            const = True,
+            nargs="?",
+            help = "Display new format json file all data as a pie chart"
+    )
+
     return parser
 
 
@@ -54,6 +64,13 @@ def read_json(path):
 def calc_time(str_time):
     del_t = datetime.timedelta();
     str_time = str_time.split(",")
+    for s_time in str_time:
+        t_elem = s_time.split("-")
+        del_t += dt.strptime(t_elem[1], "%H:%M") - dt.strptime(t_elem[0], "%H:%M")
+    return del_t
+
+def new_format_calc_time(str_time):
+    del_t = datetime.timedelta();
     for s_time in str_time:
         t_elem = s_time.split("-")
         del_t += dt.strptime(t_elem[1], "%H:%M") - dt.strptime(t_elem[0], "%H:%M")
@@ -139,6 +156,15 @@ def plot(all_data):
     plt.axis('equal')
     plt.show()
 
+def new_plot(all_data):
+    ret_data = {}
+    for day in all_data:
+        data_elem = all_data[day]
+        for subj in data_elem:
+            for subj_key in data_elem[subj]:
+                t = new_format_calc_time(data_elem[subj][subj_key])
+                ret_data[subj] = ret_data[subj] + t if subj in ret_data else t
+    return ret_data
 
 def main():
     parser = parse_arguments()
@@ -147,6 +173,10 @@ def main():
 
     if args.plot:
         data = aggregate(data)
+        plot(data)
+
+    elif args.new_plot:
+        data = new_plot(data)
         plot(data)
 
     elif args.day is not None:
