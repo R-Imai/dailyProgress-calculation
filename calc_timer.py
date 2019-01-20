@@ -148,7 +148,7 @@ def plot(all_data):
         if key in my_color:
             col[i] = hex2color(my_color[key])
 
-    plt.rcParams['font.family'] = 'Arial Unicode MS'
+    plt.rcParams['font.family'] = 'Yu Mincho'
     plt.figure(figsize=(9,5))
     plt.pie(data,counterclock=False,startangle=90,autopct=lambda p:'{:.1f}%'.format(p), colors=col)
     plt.subplots_adjust(left=0,right=0.7)
