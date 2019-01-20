@@ -156,7 +156,7 @@ def plot(all_data):
     plt.axis('equal')
     plt.show()
 
-def new_plot(all_data):
+def new_format_aggregate(all_data):
     ret_data = {}
     for day in all_data:
         data_elem = all_data[day]
@@ -176,7 +176,7 @@ def main():
         plot(data)
 
     elif args.new_plot:
-        data = new_plot(data)
+        data = new_format_aggregate(data)
         plot(data)
 
     elif args.day is not None:
