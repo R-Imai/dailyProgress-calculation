@@ -135,7 +135,7 @@ def plot(all_data):
 
     label = []
     data = []
-    col = cm.gist_rainbow(np.arange(len(all_data))/float(len(all_data)))
+    col = [None for i in range(len(all_data))]
 
     for i, elem in enumerate(sorted(all_data.items(), key=lambda x: -x[1])):
         key = elem[0]
@@ -147,6 +147,15 @@ def plot(all_data):
         data.append(val.total_seconds()/60)
         if key in my_color:
             col[i] = hex2color(my_color[key])
+
+    no_color_lange = col.count(None)
+    cmap = cm.gist_rainbow(np.arange(no_color_lange)/float(no_color_lange))
+
+    cnt = 0
+    for i, elem in enumerate(col):
+        if elem is None:
+            col[i] = cmap[cnt]
+            cnt += 1
 
     plt.rcParams['font.family'] = 'Yu Mincho'
     plt.figure(figsize=(18, 10))
