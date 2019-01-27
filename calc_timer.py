@@ -35,6 +35,16 @@ def parse_arguments():
             help = "Display all data as a pie chart"
     )
 
+    parser.add_argument(
+            "-n", "--newplot",
+            type = bool,
+            dest = "new_plot",
+            default = False,
+            const = True,
+            nargs="?",
+            help = "Display new format json file all data as a pie chart"
+    )
+
     return parser
 
 
@@ -54,6 +64,13 @@ def read_json(path):
 def calc_time(str_time):
     del_t = datetime.timedelta();
     str_time = str_time.split(",")
+    for s_time in str_time:
+        t_elem = s_time.split("-")
+        del_t += dt.strptime(t_elem[1], "%H:%M") - dt.strptime(t_elem[0], "%H:%M")
+    return del_t
+
+def new_format_calc_time(str_time):
+    del_t = datetime.timedelta();
     for s_time in str_time:
         t_elem = s_time.split("-")
         del_t += dt.strptime(t_elem[1], "%H:%M") - dt.strptime(t_elem[0], "%H:%M")
@@ -118,7 +135,7 @@ def plot(all_data):
 
     label = []
     data = []
-    col = cm.gist_rainbow(np.arange(len(all_data))/float(len(all_data)))
+    col = [None for i in range(len(all_data))]
 
     for i, elem in enumerate(sorted(all_data.items(), key=lambda x: -x[1])):
         key = elem[0]
@@ -131,14 +148,32 @@ def plot(all_data):
         if key in my_color:
             col[i] = hex2color(my_color[key])
 
-    plt.rcParams['font.family'] = 'Arial Unicode MS'
-    plt.figure(figsize=(9,5))
+    no_color_lange = col.count(None)
+    cmap = cm.gist_rainbow(np.arange(no_color_lange)/float(no_color_lange))
+
+    cnt = 0
+    for i, elem in enumerate(col):
+        if elem is None:
+            col[i] = cmap[cnt]
+            cnt += 1
+
+    plt.rcParams['font.family'] = 'Yu Mincho'
+    plt.figure(figsize=(18, 10))
     plt.pie(data,counterclock=False,startangle=90,autopct=lambda p:'{:.1f}%'.format(p), colors=col)
     plt.subplots_adjust(left=0,right=0.7)
     plt.legend(label, fancybox=True, loc='upper left', bbox_to_anchor=(0.83, 1))
     plt.axis('equal')
     plt.show()
 
+def new_format_aggregate(all_data):
+    ret_data = {}
+    for day in all_data:
+        data_elem = all_data[day]
+        for subj in data_elem:
+            for subj_key in data_elem[subj]:
+                t = new_format_calc_time(data_elem[subj][subj_key])
+                ret_data[subj] = ret_data[subj] + t if subj in ret_data else t
+    return ret_data
 
 def main():
     parser = parse_arguments()
@@ -147,6 +182,10 @@ def main():
 
     if args.plot:
         data = aggregate(data)
+        plot(data)
+
+    elif args.new_plot:
+        data = new_format_aggregate(data)
         plot(data)
 
     elif args.day is not None:
