@@ -34,7 +34,9 @@ def end(path, day, subj, val):
 
     util.write_json(util.RECORD_DIR + path, data)
     util.write_start("")
-    return json.dumps({day: date_val}, ensure_ascii=False, indent=4)[6:-2].replace("\n    ", "\n")
+    # ret_data = json.dumps({day: date_val}, ensure_ascii=False, indent=4)[6:-2].replace("\n    ", "\n")
+    ret_data = {day: date_val}
+    return ret_data
 
 def get_record(path, day):
     if os.path.exists(util.RECORD_DIR + path):
@@ -43,9 +45,11 @@ def get_record(path, day):
         data = {}
     try:
         data = data[day]
-        data = json.dumps({day: data}, ensure_ascii=False, indent=4)[6:-2].replace("\n    ", "\n")
+        data = {day: data}
+        # data = json.dumps({day: data}, ensure_ascii=False, indent=4)[6:-2].replace("\n    ", "\n")
     except KeyError:
-        data = "\"{0}\":{{\n}}".format(day)
+        data = {day: {}}
+        # data = "\"{0}\":{{\n}}".format(day)
     return data
 
 def edit(path, val, day):

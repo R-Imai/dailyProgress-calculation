@@ -1,16 +1,21 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from src import calc_logic
 from src import post_record
 from src import setting_data
 from flask_cors import CORS
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 CORS(app)
 
 
 @app.route("/")
 def root():
-    return "This is calc time project"
+    result = {
+        "version": "2.0.1",
+        "description": "This is calc time project です"
+    }
+    return jsonify(result)
 
 @app.route("/calc/daily")
 def calc_daily():
@@ -18,11 +23,6 @@ def calc_daily():
     date = request.args.get("day")
     ret_val = calc_logic.calc_daily(path, date)
     return ret_val
-
-@app.route("/record/test", methods=['PUT'])
-def test():
-    post_record.test("test_data.json")
-    return "OK"
 
 @app.route("/record/start", methods=['POST', 'GET'])
 def job_start():
@@ -44,7 +44,7 @@ def job_end():
         subj = request.json["subj"]
         val = request.json["val"]
         ret_val = post_record.end(path, day, subj, val)
-        return ret_val
+        return jsonify(ret_val)
     else:
         return "application/jsonでPOSTしてください"
 
@@ -53,7 +53,7 @@ def record_get():
     path = request.args.get("path")
     day = request.args.get("day")
     ret_val = post_record.get_record(path, day)
-    return ret_val
+    return jsonify(ret_val)
 
 @app.route("/record/edit", methods=['POST'])
 def record_edit():
