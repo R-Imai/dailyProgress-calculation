@@ -55,6 +55,8 @@ def _hex2color(hex_c):
     return [int(hex_c[1:3],16)/256.0,int(hex_c[3:5],16)/256.0,int(hex_c[5:7],16)/256.0,1]
 
 def _plot_data(all_data, save_path=None):
+    import matplotlib
+    matplotlib.use('Agg')
     import numpy as np
     import matplotlib.pyplot as plt
     import matplotlib.cm as cm
