@@ -4,6 +4,7 @@ from collections import OrderedDict
 RECORD_DIR = "record/"
 START_FILE = RECORD_DIR + "system/start_time.txt"
 PATH_RECORD_FILE = RECORD_DIR + "system/path_record.txt"
+PATH_COLOR_FILE = RECORD_DIR + "system/color_config.json"
 FIGURE_DIR = RECORD_DIR + "fig/"
 
 def _mk_dict(pairs):
@@ -40,3 +41,8 @@ def read_path_record():
 def write_path_record(val):
     with open(PATH_RECORD_FILE, 'w', encoding="utf-8") as fp:
         fp.write(val)
+
+def read_color_file():
+    with open(PATH_COLOR_FILE, "r", encoding="utf-8") as fp:
+        json_dict = json.load(fp)
+    return json_dict

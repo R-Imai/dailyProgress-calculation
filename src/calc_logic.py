@@ -59,7 +59,7 @@ def _plot_data(all_data, save_path=None):
     import matplotlib.pyplot as plt
     import matplotlib.cm as cm
 
-    my_color = util.read_json("./color_config.json")
+    my_color = util.read_color_file()
 
     label = []
     data = []
