@@ -12,7 +12,7 @@ CORS(app)
 @app.route("/")
 def root():
     result = {
-        "version": "2.0.0",
+        "version": "2.0.1",
         "description": "This is calc time project です"
     }
     return jsonify(result)
