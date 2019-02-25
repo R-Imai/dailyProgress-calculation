@@ -13,7 +13,7 @@ CORS(app)
 def root():
     result = {
         "version": "2.0.1",
-        "description": "This is calc time project です"
+        "description": "This is calc time project. "
     }
     return jsonify(result)
 
