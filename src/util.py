@@ -46,3 +46,6 @@ def read_color_file():
     with open(PATH_COLOR_FILE, "r", encoding="utf-8") as fp:
         json_dict = json.load(fp)
     return json_dict
+
+def write_color_file(data):
+    write_json(PATH_COLOR_FILE, data)
