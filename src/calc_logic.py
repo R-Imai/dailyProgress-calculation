@@ -115,7 +115,11 @@ def calc_daily(path, day):
     data = _summarize(use_data)
     return _mk_str(data)
 
-def plot(json_path, save_path=None):
+def plot(json_path, save_path):
+    if json_path is None:
+        json_path = util.read_path_record()
+    if save_path is None:
+        save_path = util.read_path_record().replace(".json", ".png")
     data = util.read_json(util.RECORD_DIR + json_path)
     data = _aggregate(data)
     save_path = None if save_path is None else util.FIGURE_DIR + save_path

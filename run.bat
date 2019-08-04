@@ -1,3 +1,4 @@
 cd /d %~dp0
-set FLASK_APP=rest_endpoint.py
-flask run
+REM set FLASK_APP=rest_endpoint.py
+REM flask run
+uvicorn fastapi_endpoint:app --reload

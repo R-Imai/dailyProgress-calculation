@@ -1,6 +1,18 @@
 # calc_timer
 [TimeRecorder](https://github.com/R-Imai/TimeRecorder) のAPI部分
 
+# FastAPI
+
+```
+pip install fastapi
+pip install uvicorn
+pip install aiofiles
+```
+
+```
+uvicorn fastapi_endpoint:app --reload
+```
+
 # 新バージョン
 
 ## 使い方
