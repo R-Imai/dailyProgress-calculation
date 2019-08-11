@@ -23,10 +23,10 @@ def calc_daily(path: str, date: str):
     ret_val = calc_logic.calc_daily(path, date)
     return ret_val
 
-@app.post("/record/start")
-def job_start(param: param.JobInfo):
-    post_record.start(param.subject, param.value)
-    return "ok"
+@app.post("/record/start", response_model=param.ReturnResult)
+def job_start(prm: param.JobInfo):
+    post_record.start(prm.subject, prm.value)
+    return param.ReturnResult(msg=f"Job ${prm.subject}/${prm.value} is start.")
 
 @app.delete("/record/start")
 def del_start():
@@ -53,10 +53,10 @@ def record_get(day: str, path: str = None):
     ret_val = post_record.get_record(path, day)
     return ret_val
 
-@app.post("/record/edit")
+@app.post("/record/edit", response_model=param.ReturnResult)
 def record_edit(param: param.EditParam):
     post_record.edit(param.path, param.val, param.day)
-    return "OK"
+    return param.ReturnResult(msg="Edit record.")
 
 @app.get("/setting/path", response_model=param.RecordPath)
 def path_record():
@@ -64,11 +64,11 @@ def path_record():
     response = param.RecordPath(path=path)
     return response
 
-@app.post("/setting/path")
+@app.post("/setting/path", response_model=param.ReturnResult)
 def path_record(param: param.RecordPath):
     path = param.path
     setting_data.write(path)
-    return "OK"
+    return param.ReturnResult(msg="Set save path.")
 
 
 @app.get("/graph/save", response_model=param.GraphPath)
@@ -84,7 +84,7 @@ def subject_config():
     subject_data = util.read_subject_file()
     return subject_data
 
-@app.put("/setting/subject", response_model=dict)
+@app.put("/setting/subject", response_model=param.ReturnResult)
 def subject_config(data: dict):
     util.write_subject_file(data)
-    return "OK"
+    return param.ReturnResult(msg="Set subject value.")

@@ -2,6 +2,10 @@
 from pydantic import BaseModel
 from collections import OrderedDict
 
+class ReturnResult(BaseModel):
+    res: str = "OK"
+    msg: str
+
 class AppInfo(BaseModel):
     name: str = "dailyProgress-calculation"
     version: str
