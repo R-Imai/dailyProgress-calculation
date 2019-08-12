@@ -55,7 +55,7 @@ def get_record(path, day):
     try:
         data = data[day]
     except KeyError:
-        {}
+        data = {}
     return data
 
 def edit(path, val, day):

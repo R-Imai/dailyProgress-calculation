@@ -34,3 +34,9 @@ class RecordPath(BaseModel):
 
 class GraphPath(BaseModel):
     path: str
+
+class SubjectData(BaseModel):
+    name: str
+    color: str
+    sort_val: int
+    is_active: bool

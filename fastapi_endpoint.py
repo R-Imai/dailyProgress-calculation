@@ -1,16 +1,29 @@
 from fastapi import FastAPI
-import api_param as param
+from starlette.middleware.cors import CORSMiddleware
+from typing import List
 from fastapi.encoders import jsonable_encoder
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 
+import api_param as param
 from src import calc_logic
 from src import post_record
 from src import setting_data
 from src import util
 
 app = FastAPI()
-app.mount("/record", StaticFiles(directory="record"), name="record")
+origins = [
+    "http:127.0.0.1"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.mount("/storage", StaticFiles(directory="record"), name="storage")
 
 @app.get("/", response_model=param.AppInfo)
 def root():
@@ -24,9 +37,9 @@ def calc_daily(path: str, date: str):
     return ret_val
 
 @app.post("/record/start", response_model=param.ReturnResult)
-def job_start(prm: param.JobInfo):
-    post_record.start(prm.subject, prm.value)
-    return param.ReturnResult(msg=f"Job ${prm.subject}/${prm.value} is start.")
+def job_start(post_param: param.JobInfo):
+    post_record.start(post_param.subject, post_param.value)
+    return param.ReturnResult(msg=f"Job ${post_param.subject}/${post_param.value} is start.")
 
 @app.delete("/record/start")
 def del_start():
@@ -54,8 +67,8 @@ def record_get(day: str, path: str = None):
     return ret_val
 
 @app.post("/record/edit", response_model=param.ReturnResult)
-def record_edit(param: param.EditParam):
-    post_record.edit(param.path, param.val, param.day)
+def record_edit(post_param: param.EditParam):
+    post_record.edit(post_param.path, post_param.val, post_param.day)
     return param.ReturnResult(msg="Edit record.")
 
 @app.get("/setting/path", response_model=param.RecordPath)
@@ -65,8 +78,8 @@ def path_record():
     return response
 
 @app.post("/setting/path", response_model=param.ReturnResult)
-def path_record(param: param.RecordPath):
-    path = param.path
+def path_record(post_param: param.RecordPath):
+    path = post_param.path
     setting_data.write(path)
     return param.ReturnResult(msg="Set save path.")
 
@@ -79,7 +92,7 @@ def graph_save(json_path: str = None, save_path: str = None):
     jsonvalue = jsonable_encoder(response)
     return jsonvalue
 
-@app.get("/setting/subject", response_model=dict)
+@app.get("/setting/subject", response_model=List[param.SubjectData])
 def subject_config():
     subject_data = util.read_subject_file()
     return subject_data
