@@ -47,9 +47,8 @@ def read_color_file():
     with open(PATH_SUBJECT_FILE, "r", encoding="utf-8") as fp:
         json_dict = json.load(fp)
     res = {}
-    for key in json_dict:
-        res[key] = json_dict[key]["color"]
-    print(res)
+    for val in json_dict:
+        res[val["name"]] = val["color"]
     return res
 
 def read_subject_file():

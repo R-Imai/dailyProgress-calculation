@@ -111,9 +111,12 @@ def _aggregate(all_data):
 
 def calc_daily(path, day):
     data = util.read_json(util.RECORD_DIR + path)
+    if not day in data:
+        return {"data": {}, "str": "データが存在しません。"}
     use_data = data[day]
     data = _summarize(use_data)
-    return _mk_str(data)
+    print(data)
+    return {"data": data, "str": _mk_str(data)}
 
 def plot(json_path, save_path):
     if json_path is None:

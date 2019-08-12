@@ -88,7 +88,7 @@ def path_record(post_param: param.RecordPath):
 def graph_save(json_path: str = None, save_path: str = None):
     saved_path = calc_logic.plot(json_path, save_path=save_path)
     data = open(saved_path, 'rb')
-    response = param.GraphPath(path=saved_path)
+    response = param.GraphPath(path=saved_path.replace("record/", "storage/", 1))
     jsonvalue = jsonable_encoder(response)
     return jsonvalue
 
