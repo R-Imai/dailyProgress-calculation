@@ -98,6 +98,7 @@ def subject_config():
     return subject_data
 
 @app.put("/setting/subject", response_model=param.ReturnResult)
-def subject_config(data: dict):
-    util.write_subject_file(data)
+def subject_config(data: List[param.SubjectData]):
+    sendData = [{"name": d.name, "color": d.color, "sort_val": d.sort_val, "is_active": d.is_active} for d in data]
+    util.write_subject_file(sendData)
     return param.ReturnResult(msg="Set subject value.")
