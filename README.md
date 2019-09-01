@@ -16,6 +16,7 @@ uvicorn fastapi_endpoint:app --reload
 # 新バージョン
 
 ## 使い方
+- run.batを起動する。もしくは
 ```
 set FLASK_APP=rest_endpoint.py
 flask run
@@ -34,6 +35,8 @@ flask run
 |GET /record/get|業務記録取得|day: 日付<br>path: ファイルのパス|
 |POST /record/edit|業務記録編集|day: 日付<br>path: ファイルのパス<br>val: 編集後Json文字列|
 |GET /graph/save|グラフ保存|json: 業務記録ファイルのパス<br> path: 保存画像ファイルのパス|
+|GET /graph/color|グラフ描画時色設定情報取得|-|
+|PUT /graph/color|グラフ描画時色設定情報更新|color_data: 色のjsonデータ|
 
 ---
 

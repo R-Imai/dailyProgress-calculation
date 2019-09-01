@@ -59,3 +59,6 @@ def read_subject_file():
 def write_subject_file(val):
     with open(PATH_SUBJECT_FILE, "w", encoding="utf-8") as fp:
         json.dump(val, fp, ensure_ascii=False, indent=4)
+
+def write_color_file(data):
+    write_json(PATH_COLOR_FILE, data)

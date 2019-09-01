@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from src import calc_logic
 from src import post_record
 from src import setting_data
+from src import util
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -12,7 +13,7 @@ CORS(app)
 @app.route("/")
 def root():
     result = {
-        "version": "2.0.1",
+        "version": "2.1.0",
         "description": "This is calc time project. "
     }
     return jsonify(result)
@@ -90,6 +91,17 @@ def graph_save():
     save_path = request.args.get("path")
     ret_value = calc_logic.plot(json_path, save_path=save_path)
     return ret_value + "へ画像を保存しました。"
+
+@app.route("/graph/color", methods=['GET', 'PUT'])
+def color_config():
+    if request.method == "GET":
+        color_data = util.read_color_file()
+        return jsonify(color_data)
+    elif request.method == "PUT":
+        if request.headers['Content-Type'] == 'application/json':
+            data = request.json["color_data"]
+            util.write_color_file(data)
+            return "OK"
 
 if __name__ == "__main__":
     app.run(debug=True)
