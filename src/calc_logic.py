@@ -32,14 +32,14 @@ def _summarize(use_data):
 def _mk_str(data):
     ret_val = ""
     for key in data:
-        ret_val_elem = "* {0}{1}\n".format(key, "{0}")
+        ret_val_elem = "- {0}{1}\n".format(key, "{0}")
         for elem in data[key]:
             if elem[0] != "":
-                msg = "\t** {0}: {1}h{2}m\n"
+                msg = "\t- {0}: {1}h{2}m\n"
                 if elem[1].hour == 0:
-                        msg = "\t** {0}: {2}m\n"
+                        msg = "\t- {0}: {2}m\n"
                 elif elem[1].minute == 0:
-                    msg = "\t** {0}: {1}h\n"
+                    msg = "\t- {0}: {1}h\n"
                 ret_val_elem += msg.format(elem[0], elem[1].hour, elem[1].minute)
             else:
                 msg = ": {0}h{1}m"

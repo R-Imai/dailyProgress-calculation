@@ -13,12 +13,14 @@ from src import util
 
 app = FastAPI()
 origins = [
-    "http:127.0.0.1"
+    "http://127.0.0.1",
+    "http://192.168.1.20"
+    "http://192.168.1.18"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,7 +29,7 @@ app.mount("/storage", StaticFiles(directory="record"), name="storage")
 
 @app.get("/", response_model=param.AppInfo)
 def root():
-    info = param.AppInfo(version="2.1.0")
+    info = param.AppInfo(version="3.0.0")
     info_jsonvalue = jsonable_encoder(info)
     return JSONResponse(content=info_jsonvalue)
 

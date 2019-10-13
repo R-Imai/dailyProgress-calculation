@@ -1,4 +1,2 @@
 cd /d %~dp0
-REM set FLASK_APP=rest_endpoint.py
-REM flask run
-uvicorn fastapi_endpoint:app --reload --port 5000
+uvicorn fastapi_endpoint:app --reload --host 127.0.0.1 --port 5050
