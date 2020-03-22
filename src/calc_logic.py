@@ -32,14 +32,14 @@ def _summarize(use_data):
 def _mk_str(data):
     ret_val = ""
     for key in data:
-        ret_val_elem = "* {0}{1}\n".format(key, "{0}")
+        ret_val_elem = "- {0}{1}\n".format(key, "{0}")
         for elem in data[key]:
             if elem[0] != "":
-                msg = "\t** {0}: {1}h{2}m\n"
+                msg = "\t- {0}: {1}h{2}m\n"
                 if elem[1].hour == 0:
-                        msg = "\t** {0}: {2}m\n"
+                        msg = "\t- {0}: {2}m\n"
                 elif elem[1].minute == 0:
-                    msg = "\t** {0}: {1}h\n"
+                    msg = "\t- {0}: {1}h\n"
                 ret_val_elem += msg.format(elem[0], elem[1].hour, elem[1].minute)
             else:
                 msg = ": {0}h{1}m"
@@ -111,11 +111,18 @@ def _aggregate(all_data):
 
 def calc_daily(path, day):
     data = util.read_json(util.RECORD_DIR + path)
+    if not day in data:
+        return {"data": {}, "str": "データが存在しません。"}
     use_data = data[day]
     data = _summarize(use_data)
-    return _mk_str(data)
+    print(data)
+    return {"data": data, "str": _mk_str(data)}
 
-def plot(json_path, save_path=None):
+def plot(json_path, save_path):
+    if json_path is None:
+        json_path = util.read_path_record()
+    if save_path is None:
+        save_path = util.read_path_record().replace(".json", ".png")
     data = util.read_json(util.RECORD_DIR + json_path)
     data = _aggregate(data)
     save_path = None if save_path is None else util.FIGURE_DIR + save_path

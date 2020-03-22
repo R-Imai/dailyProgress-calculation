@@ -1,0 +1,32 @@
+[
+    {
+        "name": "MTG",
+        "color": "#00a858",
+        "sort_val": 1,
+        "is_active": true
+    },
+    {
+        "name": "勉強",
+        "color": "#250090",
+        "sort_val": 3,
+        "is_active": true
+    },
+    {
+        "name":"プロジェクトB",
+        "color": "#00cc88",
+        "sort_val": 2,
+        "is_active": true
+    },
+    {
+        "name":"てすと",
+        "color": "#000000",
+        "sort_val": 10,
+        "is_active": false
+    },
+    {
+        "name":"テスト2",
+        "color": "#ffffff",
+        "sort_val": 100,
+        "is_active": false
+    }
+]
