@@ -8,7 +8,9 @@ def _calc_time(str_time):
     del_t = datetime.timedelta();
     for s_time in str_time:
         t_elem = s_time.split("-")
-        del_t += dt.strptime(t_elem[1], "%H:%M") - dt.strptime(t_elem[0], "%H:%M")
+        start_time = dt.strptime(t_elem[0], "%H:%M")
+        end_time = dt.strptime(t_elem[1], "%H:%M") if start_time < dt.strptime(t_elem[1], "%H:%M") else dt.strptime(t_elem[1], "%H:%M") + datetime.timedelta(days=1)
+        del_t += end_time - start_time
     return del_t
 
 
@@ -115,7 +117,6 @@ def calc_daily(path, day):
         return {"data": {}, "str": "データが存在しません。"}
     use_data = data[day]
     data = _summarize(use_data)
-    print(data)
     return {"data": data, "str": _mk_str(data)}
 
 def plot(json_path, save_path):
