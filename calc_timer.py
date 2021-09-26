@@ -158,6 +158,7 @@ def plot(all_data):
             cnt += 1
 
     plt.rcParams['font.family'] = 'Yu Mincho'
+    # plt.rcParams['font.family'] = 'Hiragino Maru Gothic Pro'
     plt.figure(figsize=(18, 10))
     plt.pie(data,counterclock=False,startangle=90,autopct=lambda p:'{:.1f}%'.format(p), colors=col)
     plt.subplots_adjust(left=0,right=0.7)
