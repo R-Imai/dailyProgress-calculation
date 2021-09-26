@@ -1,9 +1,17 @@
 import json
 import os
 from datetime import datetime
+from datetime import timedelta
 from collections import OrderedDict
 
 from src import util
+
+DAY_CHANGE_HOUR = 5
+
+def get_target_day():
+    now = datetime.now()
+    target_day = now if now.hour > DAY_CHANGE_HOUR else (now - timedelta(days = 1))
+    return target_day
 
 def start(subject, value):
     start_time = datetime.now().strftime("%H:%M")
@@ -19,7 +27,8 @@ def get_start():
 def end():
     path = util.read_path_record()
     job_data = util.read_start()
-    day = str(datetime.now().day)
+    target_day = get_target_day()
+    day = str(target_day.day)
     subj = [job_data["subject"], job_data["value"]]
     val = f"{job_data['start_time']}-{datetime.now().strftime('%H:%M')}"
 
@@ -63,7 +72,7 @@ def edit(path, val, day):
     if path is None:
         path = util.read_path_record()
     if day is None:
-        day = str(datetime.now().day)
+        day = str(get_target_day().day)
 
     json_data = util.read_json(util.RECORD_DIR + path)
     json_data[day] = val
