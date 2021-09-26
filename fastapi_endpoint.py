@@ -29,7 +29,7 @@ app.mount("/storage", StaticFiles(directory="record"), name="storage")
 
 @app.get("/", response_model=param.AppInfo)
 def root():
-    info = param.AppInfo(version="3.0.1")
+    info = param.AppInfo(version="3.0.2")
     info_jsonvalue = jsonable_encoder(info)
     return JSONResponse(content=info_jsonvalue)
 
